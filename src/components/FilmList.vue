@@ -1,10 +1,7 @@
 <template>
 
     <div>
-        <header>
-            <input type="text" placeholder="Cosa stai Cercando?">
-            <button>Submit</button>
-        </header>
+        <Search @performSearch="searchFilm"/>
 
         <main class="container films-list">
             <div class="row">
@@ -26,27 +23,34 @@
 <script>
 import axios from "axios"
 import Film from "./Film.vue"
+import Search from "./Search.vue"
 
 export default {
     name: "FilmList",
 
     components: {
-        Film
+        Film,
+        Search
     },
 
     data: function () {
         return {
-            apiUrl: "https://api.themoviedb.org/3/search/movie",
-            films: []
+            apiUrlFilms: "https://api.themoviedb.org/3/search/movie",
+            films: [],
+            apiTitle: "fantozzi",
         }
     },
 
     created: function () {
-        axios
-            .get(this.apiUrl, {
+       this.getMovies();
+    },
+    methods: {
+        getMovies() {
+             axios
+            .get(this.apiUrlFilms, {
                 params: {
                     api_key: "e99307154c6dfb0b4750f6603256716d",
-                    query: "ritorno",
+                    query: this.apiTitle,
                     language: "it-IT"
                 }
             })
@@ -57,27 +61,21 @@ export default {
                     // console.log(this.films);
                 }
             )
-    }
+            .catch();
+        },
+        searchFilm: function(text) {
+            // console.log(text);
+            this.apiTitle = text;
+            this.getMovies();
+        }
+    },
 }
 
 
 </script>
 
 <style lang="scss" scoped>
-    header {
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        height: 10vh;
-        background-color: black;
-
-        input,
-        button {
-            padding: 5px;
-            margin-right: 10px;
-        }
-    }
-
+    
     main {
         height: 90vh;
     }
@@ -86,6 +84,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow-y: auto;
     }
 
 
