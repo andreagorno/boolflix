@@ -6,29 +6,26 @@
         <main >
             <div class=" films-list">
                 
+                <Film
+                    v-for="film in films"
+                    :key="film.id"
+                    :item="film"
+                />
                 
-                
-                    <Film
-                        v-for="film in films"
-                        :key="film.id"
-                        :item="film"
-                    />
-                
-                
-                
-                
-                    <Series
-                        v-for="serie in series"
-                        :key="serie.id"
-                        :item="serie"
-                    />
+                <Series
+                    v-for="serie in series"
+                    :key="serie.id"
+                    :item="serie"
+                />
                 
             </div>
         </main>
     </div>
+                
+</template>
+                
 
     
-</template>
 
 <script>
 import axios from "axios"
@@ -113,7 +110,7 @@ export default {
     
     main {
         height: 90vh;
-        padding-top: 5vh;
+        padding-top: 12vh;
     }
 
     .films-list {
