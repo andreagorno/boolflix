@@ -1,13 +1,41 @@
 <template>
-    <div class="text-center pb-4">
-        <ul>
-            <li> {{ item.title }} </li>
-            <li> {{ item.original_title }} </li>
-            <li v-show="this.item.original_language != 'it' && this.item.original_language != 'en' "> {{ item.original_language }} </li>
-            <img v-show="this.item.original_language == 'it' " src="../assets/images/it.png" alt="flag">
-            <img v-show="this.item.original_language == 'en' " src="../assets/images/en.png" alt="flag">
-            <li> {{ item.vote_average }} </li>
-        </ul>
+    <div class="text-center pb-4 card">
+        <div><img :src="getImage()"></div>
+        <div>{{ item.title }}</div>
+        <div>{{ item.original_title }}</div>
+        <div v-if="avaibleFlags.includes(item.original_language)">
+            <img 
+            class="flag"
+            :src="require(`../assets/images/${item.original_language}.png`)" 
+            :alt="`bandiera ${item.original_language}`"
+            >
+        </div>
+        <div v-else> {{ item.original_language }}</div>
+        <div>
+            <i 
+                v-for="star in roundVote(item.vote_average)" 
+                :key="item.id+star"
+                class="fas fa-star"> 
+            </i>
+            <i
+                v-for="(emptystar, index) in (5-roundVote(item.vote_average))" 
+                :key="index"
+                class="far fa-star"> 
+            </i> 
+        </div>
+        
+            
+            <!-- <img 
+            class="flag" 
+            v-if="this.item.original_language == 'it' " 
+            src="../assets/images/it.png" alt="flag">
+            <img 
+            class="flag" 
+            v-else-if="this.item.original_language == 'en' " 
+            src="../assets/images/en.png" alt="flag">
+            <li 
+            v-else> {{ item.original_language }} </li> -->
+            
     </div>
 </template>
 
@@ -16,22 +44,60 @@ export default {
     name: "Film",
     props: [ "item" ],
 
+    data: function () {
+        return {
+            avaibleFlags: [ "it", "en" ]
+        }
+    },
+
     methods: {
-        // getFlags: function () {
-        //    if (this.item.original_language == "it") {
-               
-        //    } 
-        // }
+        getImage: function () {
+            if (this.item.poster_path) {
+                // Poster è presente
+                return "https://image.tmdb.org/t/p/w342" + this.item.poster_path;
+            } else {
+                // Poster non presente
+                return "https://image.shutterstock.com/image-vector/empty-placeholder-image-icon-design-260nw-1366372628.jpg"
+            }
+
+            
+            
+        },
+
+        roundVote: function (vote) {
+            var number = (vote / 2);
+            var rounded = Math.round(number);
+            return rounded;
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    ul {
-        list-style: none;
+    
+    .card {
+        width: 400px;
+        background-color: grey;
+        border: none;
     }
 
     img {
-        height: 10px;
+        width: 200px;
+        height: 250px;
+    }
+    
+    .flag {
+        height: 20px;
+        width: 30px;
     }
 </style>
+            
+        
+            
+    
+
+                
+                
+
+
+    

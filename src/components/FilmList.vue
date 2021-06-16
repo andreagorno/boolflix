@@ -3,24 +3,26 @@
     <div>
         <Search @performSearch="searchFilm"/>
 
-        <main class="container films-list">
-            <div class="row">
-                <div 
-                class="col-6 col-md-4 col-lg-3" 
-                v-for="film in films"
-                :key="film.id">
+        <main >
+            <div class=" films-list">
+                
+                
+                
                     <Film
+                        v-for="film in films"
+                        :key="film.id"
                         :item="film"
                     />
-                </div>
-                <div 
-                class="col-6 col-md-4 col-lg-3" 
-                v-for="serie in series"
-                :key="serie.id">
+                
+                
+                
+                
                     <Series
+                        v-for="serie in series"
+                        :key="serie.id"
                         :item="serie"
                     />
-                </div>
+                
             </div>
         </main>
     </div>
@@ -47,7 +49,7 @@ export default {
         return {
             apiUrlFilms: "https://api.themoviedb.org/3/search/movie",
             apiUrlSeries: "https://api.themoviedb.org/3/search/tv",
-            apiTitle: "scrubs",
+            apiTitle: "breaking",
             films: [],
             series: [],
         }
@@ -109,16 +111,19 @@ export default {
 
 <style lang="scss" scoped>
     
-    // main {
-    //     height: 90vh;
-    // }
+    main {
+        height: 90vh;
+        padding-top: 5vh;
+    }
 
     .films-list {
         display: flex;
         justify-content: center;
-        // align-items: center;
+        flex-wrap: wrap;
         overflow-y: auto;
     }
 
 
 </style>
+        
+        
