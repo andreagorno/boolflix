@@ -1,25 +1,29 @@
 <template>
 
     <div>
-        <Search @performSearch="searchFilm"/>
+        <div v-if="!intro">
+            <Search @performSearch="searchFilm"/>
 
-        <main >
-            <div class=" films-list">
-                
-                <Film
-                    v-for="film in films"
-                    :key="film.id"
-                    :item="film"
-                />
-                
-                <Series
-                    v-for="serie in series"
-                    :key="serie.id"
-                    :item="serie"
-                />
-                
-            </div>
-        </main>
+            <main >
+                <div class=" films-list">
+                    
+                    <Film
+                        v-for="film in films"
+                        :key="film.id"
+                        :item="film"
+                    />
+                    
+                    <Series
+                        v-for="serie in series"
+                        :key="serie.id"
+                        :item="serie"
+                    />
+                    
+                </div>
+            </main>
+        </div>
+
+        <Intro v-else/>
     </div>
                 
 </template>
@@ -32,6 +36,7 @@ import axios from "axios"
 import Film from "./Film.vue"
 import Series from "./Series.vue"
 import Search from "./Search.vue"
+import Intro from "./Intro.vue";
 
 export default {
     name: "FilmList",
@@ -39,21 +44,24 @@ export default {
     components: {
         Film,
         Series,
-        Search
+        Search,
+        Intro
     },
 
     data: function () {
         return {
             apiUrlFilms: "https://api.themoviedb.org/3/search/movie",
             apiUrlSeries: "https://api.themoviedb.org/3/search/tv",
-            apiTitle: "breaking",
+            apiTitle: "short",
             films: [],
             series: [],
+            intro: true
         }
     },
 
     created: function () {
        this.getMovies();
+       
     },
     methods: {
         getMovies() {
@@ -69,8 +77,8 @@ export default {
             .then(
                 (res) => {
                     // console.log(res.data.results);
+                    // console.log(this.films);
                     this.films = res.data.results;
-                    console.log(this.films);
                 }
             )
             .catch();
@@ -87,8 +95,12 @@ export default {
             .then(
                 (res) => {
                     // console.log(res.data.results);
+                    // console.log(this.series);
                     this.series = res.data.results;
-                    console.log(this.series);
+                    setTimeout( () => {
+                        this.intro = false;
+                    },2000)
+                    
                 }
             )
 
@@ -120,7 +132,7 @@ export default {
         overflow-y: auto;
     }
 
-
 </style>
+
         
         

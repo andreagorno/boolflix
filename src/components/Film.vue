@@ -1,7 +1,7 @@
 <template>
     <div class=" pb-4 card">
         <div>
-            <img :src="getImage()">
+            <img class="poster" :src="getImage()">
             <div class="info">
                 <div>
                     <span>Titolo: </span>
@@ -12,13 +12,17 @@
                     {{ item.original_title }}
                 </div>
                 <div v-if="avaibleFlags.includes(item.original_language)">
+                    <span>Lingua Originale: </span>
                     <img 
                     class="flag"
                     :src="require(`../assets/images/${item.original_language}.png`)" 
                     :alt="`bandiera ${item.original_language}`"
                     >
                 </div>
-                <div v-else> {{ item.original_language }}</div>
+                <div v-else>
+                    <span>Lingua Originale: </span>
+                    {{ item.original_language }}
+                </div>
                 <div>
                     <span>Voto: </span>
                     <i 
@@ -62,7 +66,7 @@ export default {
 
     data: function () {
         return {
-            avaibleFlags: [ "it", "en" ]
+            avaibleFlags: [ "it", "en", "fr", "es", "de" ]
         }
     },
 
@@ -102,7 +106,6 @@ export default {
     .card {
         width: 300px;
         height: 400px;
-        background-color: grey;
         border: 1px solid white;
         margin: 20px;
         overflow: hidden;
@@ -114,9 +117,10 @@ export default {
     }
 
     .card:hover {
-        background-color: black;
+        background-color: rgba($color: #000000, $alpha: 0.6);
         padding: 40px 10px 0 10px;
         transform: scale(1.1);
+        cursor: pointer;
 
         .info {
             display: block;
@@ -132,13 +136,13 @@ export default {
             font-weight: bold;
         }
 
-        img {
+        .poster {
             display: none;
         }
     }
         
 
-    img {
+    .poster {
         width: 300px;
         height: 400px;
     }

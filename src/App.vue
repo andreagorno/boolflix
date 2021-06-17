@@ -1,21 +1,22 @@
 <template>
   <div id="app">
-      <!-- <Header/> -->
-      <FilmList />
+      
+    <FilmList />
   </div>
 </template>
 
 <script>
-import FilmList from "./components/FilmList.vue"
-// import Header from "./components/Header.vue"
+import FilmList from "./components/FilmList.vue";
+
+
 
 
 export default {
   name: 'App',
   components: {
     FilmList,
-    // Header
   }
+    
 }
 </script>
 
