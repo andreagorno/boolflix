@@ -1,15 +1,19 @@
 <template>
     <header>
+            
+        <div>
+            <input 
+            type="text" 
+            placeholder="Cosa stai Cercando?"
+            v-model.trim="searchText"
+            >
+
+            <button 
+            @click.prevent="$emit('performSearch', searchText)">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
         
-        <button 
-        @click.prevent="$emit('performSearch', searchText)">
-            <i class="fas fa-search"></i>
-        </button>
-        <input 
-        type="text" 
-        placeholder="Cosa stai Cercando?"
-        v-model.trim="searchText"
-        >
         <div>
             <img 
             src="../assets/images/netflix_logo.png" 
@@ -81,6 +85,30 @@ export default {
         div {
             flex-grow: 1;
             margin-left: 20px;
+
+            img {
+                height: 7vh;
+            }
+        }
+    }
+
+    @media all and (max-width: 567px) {
+        header {
+            display: flex;
+            flex-direction: row-reverse;
+            padding: 10px;
+
+            input {
+                width: 150px;
+            }
+            div {
+                flex-grow: 0;
+                img {
+                height: 4vh;
+                width: 120px;
+            }
+            }
+            
         }
     }
 </style>
